@@ -118,8 +118,7 @@
                   Enter your mappings here, one on each line.
               </p>
               <textarea rows="5" cols="50" id="${textarea_id}"
-                        placeholder="nickname=Real Name">
-              </textarea>
+                        placeholder="nickname=Real Name"></textarea>
               <p>
                   Each mapping should look something like
                   <code>nickname=Firstname Lastname</code>
