@@ -119,9 +119,19 @@
             GM_addStyle(GM_getResourceText("jQueryUI-css"));
             $("body").append(`
                 <div id="${dialog_id}" title="Discord custom nicknames">
-                  <h1>Discord custom nicknames</h1>
-                  <p> Enter your mappings here, one on each line.
-                  <textarea rows="5" cols="50" id="${textarea_id}"></textarea>
+                  <p> 
+                      Enter your mappings here, one on each line.
+                  </p>
+                  <p>
+                      Each mapping should look something like
+                      <code>nickname=Firstname Lastname</code>
+                      where the left-hand side of the <code>=</code>
+                      sign is the normal Discord nickname (excluding
+                      the <code>#1234</code> suffix), and the
+                      right-hand side is what you want to see instead.
+                  </p>
+                  <textarea rows="5" cols="50" id="${textarea_id}">
+                  </textarea>
                 </div>
             `);
             $("#" + textarea_id).innerText = nick_map_str;
