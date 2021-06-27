@@ -111,29 +111,34 @@
         return map_obj;
     }
 
+    function dialog_html(dialog_id, textarea_id) {
+        return `
+            <div id="${dialog_id}" title="Discord custom nicknames">
+              <p>
+                  Enter your mappings here, one on each line.
+              </p>
+              <textarea rows="5" cols="50" id="${textarea_id}"
+                        placeholder="nickname=Real Name">
+              </textarea>
+              <p>
+                  Each mapping should look something like
+                  <code>nickname=Firstname Lastname</code>
+                  where the left-hand side of the <code>=</code>
+                  sign is the normal Discord nickname (excluding
+                  the <code>#1234</code> suffix), and the
+                  right-hand side is what you want to see instead.
+              </p>
+            </div>
+        `;
+    }
+
     function display_dialog() {
         const dialog_id = ELEMENT_PREFIX + "-dialog";
         const textarea_id = ELEMENT_PREFIX + "-textarea";
         const selector = "#" + dialog_id;
         if ($(selector).length == 0) {
             GM_addStyle(GM_getResourceText("jQueryUI-css"));
-            $("body").append(`
-                <div id="${dialog_id}" title="Discord custom nicknames">
-                  <p> 
-                      Enter your mappings here, one on each line.
-                  </p>
-                  <p>
-                      Each mapping should look something like
-                      <code>nickname=Firstname Lastname</code>
-                      where the left-hand side of the <code>=</code>
-                      sign is the normal Discord nickname (excluding
-                      the <code>#1234</code> suffix), and the
-                      right-hand side is what you want to see instead.
-                  </p>
-                  <textarea rows="5" cols="50" id="${textarea_id}">
-                  </textarea>
-                </div>
-            `);
+            $("body").append(dialog_html(dialog_id, textarea_id));
             $("#" + textarea_id).innerText = nick_map_str;
             $(selector).dialog({
                 autoOpen: false,
