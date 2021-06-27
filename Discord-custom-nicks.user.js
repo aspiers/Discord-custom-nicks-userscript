@@ -145,6 +145,7 @@
                         log(val);
                         GM_setValue(STORAGE, val || "");
                         nick_map = parse_map(val || "");
+                        replace_all();
                         $(this).dialog("close");
                     }
                 }]
@@ -153,15 +154,8 @@
         $(selector).dialog("open");
     }
 
-    GM_registerMenuCommand("Nickname mapping", () => {
-        display_dialog();
-        const val = prompt("Enter nickname mapping", serialise_map(nick_map));
-        if (val !== null) {
-            nick_map = parse_map(val);
-            GM_setValue(STORAGE, nick_map);
-        }
-        replace_all();
-    });
+    GM_registerMenuCommand("Nickname mapping", display_dialog);
+
     function replace_all() {
         waitForKeyElements(
             "[class^='membersWrap'] span[class^='roleColor']",
