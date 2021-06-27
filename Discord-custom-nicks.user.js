@@ -32,6 +32,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+// Stop JSHint in Tampermonkey's CodeMirror editor from complaining
+// about globals imported via @require:
+// https://jshint.com/docs/#inline-configuration
+/* globals jQuery waitForKeyElements */
+
 (function() {
     'use strict';
     let $ = jQuery;
