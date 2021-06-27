@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Discord custom nicknames
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/aspiers/Discord-custom-nicks-userscript
 // @version      0.1.1
 // @description  Assign custom names to Discord nicknames client-side
 // @author       Adam Spiers
