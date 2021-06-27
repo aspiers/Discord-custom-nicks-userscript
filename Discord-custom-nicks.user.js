@@ -9,10 +9,13 @@
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
 // @require      https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @require      https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=115012
+// @resource     jQueryUI-css https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/vader/jquery-ui.min.css
 // @downloadURL  https://raw.githubusercontent.com/aspiers/Discord-custom-nicks-userscript/main/Discord-custom-nicks.user.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_registerMenuCommand
+// @grant        GM_getResourceText
+// @grant        GM_addStyle
 // @run-at       document-end
 // ==/UserScript==
 //
@@ -113,11 +116,7 @@
         const textarea_id = ELEMENT_PREFIX + "-textarea";
         const selector = "#" + dialog_id;
         if ($(selector).length == 0) {
-            $("head").append (
-                '<link '
-                + 'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/le-frog/jquery-ui.min.css" '
-                + 'rel="stylesheet" type="text/css">'
-            );
+            GM_addStyle(GM_getResourceText("jQueryUI-css"));
             $("body").append(`
                 <div id="${dialog_id}" title="Discord custom nicknames">
                   <h1>Discord custom nicknames</h1>
