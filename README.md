@@ -66,7 +66,9 @@ Configuration
 - If installation succeeded, you should see a `Discord custom
   nicknames` userscript active.
 
-- Click on `Nickname mapping`.
+- Click on `Nickname mapping`.  You'll see this:
+
+![image](https://user-images.githubusercontent.com/100738/123567203-7f530180-d7b9-11eb-85a4-91ae227d68f9.png)
 
 - Follow the instructions to enter one or more mappings for Discord
   users you know who have hard-to-remember nicknames.
