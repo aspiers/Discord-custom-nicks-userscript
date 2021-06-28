@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Discord custom nicknames
 // @namespace    https://github.com/aspiers/Discord-custom-nicks-userscript
-// @version      0.2.4
+// @version      0.3.0
 // @description  Assign custom names to Discord nicknames client-side
 // @author       Adam Spiers
 // @match        https://discord.com/channels/*
@@ -243,10 +243,42 @@
     GM_registerMenuCommand("Nickname mapping", display_dialog);
 
     const CSS_SELECTORS = [
-        "div[class^='membersWrap'] span[class^='roleColor']",
-        "span[class^='headerText'] span[class^='username']",
-        "div[class*='messageContent'] span.mention",
-        "div[class^='replyBar'] span[class^='name']",
+        /////////////////////////////////////////////////////////
+        // Channel pages
+
+        // User list on right-hand side
+        "div[class^=membersWrap] span[class^=roleColor]",
+
+        // Attributions in main chat pane
+        "span[class^=headerText] span[class^=username]",
+
+        // Mentions within messages
+        "div[class*=messageContent] span.mention",
+
+        // When replying, name of user we're replying to
+        "div[class^=replyBar] span[class^=name]",
+
+        /////////////////////////////////////////////////////////
+        // DM pages
+
+        // DM list in left bar
+        "div#private-channels div[class^=nameAndDecorators]",
+
+        // Main friends list when "Friends" is clicked on
+        "div[class^=peopleList] div[class^=userInfo] span[class^=username]",
+
+        // Top of individual DM page
+        "div[class^=chat] section[class^=title] h3[class*=title]",
+
+        // h3 under individual DM large avatar
+        "div[id^=chat-messages] h3[class^=header]"
+
+        // N.B. deliberately not replacing
+        //
+        // "This is the beginning of your direct message history with"
+        //
+        // because that's a useful place to show the mapping with
+        // the original username.
     ];
 
     function init() {
