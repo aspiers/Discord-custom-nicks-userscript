@@ -4,9 +4,10 @@ Custom Discord nicknames (browser userscript)
 What's this for?
 ----------------
 
-If you find yourself struggling to remember who someone is on Discord,
-and you use Discord in a standard desktop browser supported by
-[Tampermonkey](https://www.tampermonkey.net/), then this is for you.
+If you find yourself struggling to remember who someone is on Discord
+from their username, and you use Discord in a standard desktop browser
+supported by [Tampermonkey](https://www.tampermonkey.net/), then this
+is for you.
 
 (Unfortunately this won't probably work on Discord apps or mobile
 browsers.)
