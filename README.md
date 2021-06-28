@@ -51,6 +51,8 @@ translates nicknames of Discord users you know into their real names
 Then it basically watches the Discord web page for certain HTML
 elements which it knows will represent user's nicknames, and if any of
 those match any of the nicknames in the mapping you've configured,
+they will be automatically replaced with the alternative text you've
+chosen.
 
 Installation
 ------------
