@@ -182,17 +182,9 @@
     }
 
     unsafeWindow.GM_info = GM_info;
-    function get_resource(name) {
-        return GM_info.script.resources.find(
-            r => r.name == name
-        );
-    }
 
     function insert_CSS() {
         let CSS = GM_getResourceText("jQueryUI-css");
-        let CSS_URL = get_resource("jQueryUI-css").url;
-        let CSS_URL_path = CSS_URL.replace(/[^/]+$/, '');
-        // debug(`CSS URL path is ${CSS_URL_path}`);
         for (let resource of GM_info.script.resources) {
             let image = resource.url.match(/images\/.+\.png/);
             if (!image) {
@@ -200,7 +192,6 @@
             }
             let URL = GM_getResourceURL(resource.name);
             let rel_path = image[0];
-            // debug(`Replacing url("${rel_path}") with url("${URL}")`);
             CSS = CSS.replaceAll(
                 `url("${rel_path}")`,
                 `url("${URL}")`,
