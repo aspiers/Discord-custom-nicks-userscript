@@ -85,10 +85,11 @@ tools in browser development consoles to verify this.
 
 ### How can I share my configuration across multiple browsers / machines?
 
-For now you probably just have to copy and paste, but suggestions for
-how to improve this are very welcome.  However ideally they should
-preserve user privacy, i.e. not disclose unencrypted mappings over the
-network to third parties like cloud service providers.
+For now you probably just have to copy and paste, but [suggestions for
+how to improve this are very welcome](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/1).
+However ideally they should preserve user privacy, i.e. not disclose
+unencrypted mappings over the network to third parties like cloud
+service providers.
 
 Development / support / feedback
 --------------------------------
