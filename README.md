@@ -103,6 +103,13 @@ client-side and never sent over any network.  Don't take my word for
 it; you can check the source code, and/or use the network analysis
 tools in browser development consoles to verify this.
 
+### Will this become redundant if Discord implements this feature natively?
+
+Possibly, but only if they do it in a completely privacy-preserving
+way.  If they don't and you use their feature, you are potentially
+[doxing](https://en.wikipedia.org/wiki/Doxing) any users for whom
+you assign real names.
+
 ### How can I share my configuration across multiple browsers / machines?
 
 For now you probably just have to copy and paste, but [suggestions for
