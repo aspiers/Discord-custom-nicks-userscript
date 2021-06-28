@@ -96,6 +96,13 @@ with the more sensible text you have chosen.
 FAQ
 ---
 
+### It doesn't do the replacement if I switch channels / pages
+
+Yeah, sorry about that - I've filed [an issue to track this
+bug](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/7),
+but this is a brand new project and I haven't got round to fixing it
+yet.
+
 ### Does this compromise the privacy of users?
 
 No!  The mapping is stored locally in your browser, and is only used
