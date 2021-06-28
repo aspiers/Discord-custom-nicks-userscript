@@ -30,7 +30,7 @@ upvotes](https://support.discord.com/hc/en-us/community/posts/360058761331-Clien
 But sadly these *seem* to have fallen on deaf ears for quite a while,
 so we've mostly just had to tolerate this annoyance.
 
-I say "mostly", because it seems [they are potential working on some
+I say "mostly", because it seems [they are potentially working on some
 kind of solution to
 this](https://support.discord.com/hc/en-us/community/posts/1500000932002/comments/1500000829422)
 but supposedly it's currently exclusive to people with access to the
