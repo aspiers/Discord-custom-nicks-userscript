@@ -23,9 +23,21 @@ feature, where you can click on a user's nickname, and then click to
 add a note reminding you who that user actually is.
 
 [Countless requests](https://support.discord.com/hc/en-us/search?filter_by=community&query=custom+nicknames&utf8=%E2%9C%93)
-have been made for a feature where you can (privately) assign your own choice of name
-to any other user, including [some with many upvotes](https://support.discord.com/hc/en-us/community/posts/360058761331-Client-Side-Nicknames-Nicknames-for-your-friends-), but sadly these have
-fallen on deaf ears, so we've just had to tolerate this annoyance ...
+have been made for a feature where you can (privately) assign your own
+choice of name to any other user, including [some with many
+upvotes](https://support.discord.com/hc/en-us/community/posts/360058761331-Client-Side-Nicknames-Nicknames-for-your-friends-).
+But sadly these *seem* to have fallen on deaf ears for quite a while,
+so we've mostly just had to tolerate this annoyance.
+
+I say "mostly", because it seems [they are potential working on some
+kind of solution to
+this](https://support.discord.com/hc/en-us/community/posts/1500000932002/comments/1500000829422)
+but supposedly it's currently exclusive to people with access to the
+experimental mode, and unless you already have that, trying to get it
+is supposedly [against the
+ToS](https://www.reddit.com/r/discordapp/comments/jhor2x/how_does_one_get_experimental_features/).
+So unless you know a way around this, like me you were stuck with the
+issue ...
 
 Until now!
 
