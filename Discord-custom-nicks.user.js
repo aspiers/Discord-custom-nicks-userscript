@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Discord custom nicknames
 // @namespace    https://github.com/aspiers/Discord-custom-nicks-userscript
-// @version      0.1.4
+// @version      0.2.0
 // @description  Assign custom names to Discord nicknames client-side
 // @author       Adam Spiers
 // @match        https://discord.com/channels/*
@@ -43,15 +43,48 @@
 (function() {
     'use strict';
     let $ = jQuery;
+    unsafeWindow.jQuery = jQuery;
 
-    const ELEMENT_PREFIX = "Discord-custom-nicknames";
+    const ELEMENT_PREFIX = "Discord-custom-nicknames-";
+    const DIALOG_ID = ELEMENT_PREFIX + "dialog";
+    const TEXTAREA_ID = ELEMENT_PREFIX + "textarea";
+    const DIALOG_SELECTOR = "#" + DIALOG_ID;
+    const TEXTAREA_SELECTOR = "#" + TEXTAREA_ID;
+
     const ORIG_ATTR = "data-Discord-orig-nickname";
     const STORAGE = "Discord_custom_nicknames_mapping";
-    let nick_map_str = GM_getValue(STORAGE);
-    if (typeof(nick_map_str) !== "string") {
-        nick_map_str = "";
+
+    function get_nick_map_str() {
+        let map_str = GM_getValue(STORAGE);
+        return typeof(map_str) == "string" ? map_str : "";
     }
-    let nick_map = parse_map(nick_map_str);
+    unsafeWindow.get_nick_map_str = get_nick_map_str;
+
+    function set_nick_map_str(new_value) {
+        GM_setValue(STORAGE, new_value);
+    }
+    unsafeWindow.set_nick_map_str = set_nick_map_str;
+
+    function get_nick_map() {
+        return parse_map(get_nick_map_str());
+    }
+    unsafeWindow.get_nick_map = get_nick_map;
+
+    // function serialise_map(map_obj) {
+    //     return Object.entries(map_obj).map(e => e[0] + "=" + e[1]).join("\n");
+    // }
+
+    function parse_map(map_str) {
+        let map_obj = {};
+        for (const pair of map_str.split("\n")) {
+            if (pair.indexOf("=") != -1) {
+                let [k, v] = pair.split("=");
+                map_obj[k] = v;
+            }
+        }
+        return map_obj;
+    }
+    window.parse_map = parse_map;
 
     const PREFIX = "[Discord custom nicknames]";
 
@@ -63,13 +96,19 @@
         console.log(PREFIX, ...args);
     }
 
-    function replace_nick(element) {
+    function replace_nick(nick_map, element) {
         // debug("replace", element);
         let orig_nick = element.getAttribute(ORIG_ATTR);
         let Discord_nick = orig_nick || element.innerText;
+        let at = "";
+        if (Discord_nick.startsWith("@")) {
+            at = "@";
+            Discord_nick = Discord_nick.slice(1);
+        }
         let mapped_name = nick_map[Discord_nick];
         if (mapped_name) {
-            log(`${Discord_nick} -> ${mapped_name}`);
+            mapped_name = at + mapped_name;
+            log(`${at}${Discord_nick} -> ${mapped_name}`);
             if (!orig_nick) {
                 // Back up the original to an attribute so that we can remap later
                 // without reloading the page.
@@ -79,18 +118,22 @@
         }
         else {
             // debug(`no mapping found for ${element.innerText}`);
+            // This is required in case a nick mapping is removed:
+            if (orig_nick) {
+                element.innerText = orig_nick;
+            }
         }
     }
 
-    function replace_css_elements(query) {
+    function replace_css_elements(nick_map, query) {
         let matches = jQuery(query);
         // debug(`replacing ${query}`, matches);
         if (matches && matches.each) {
-            matches.each((i, elt) => replace_nick(elt));
+            matches.each((i, elt) => replace_nick(nick_map, elt));
         }
     }
 
-    function replace_xpath_elements(query) {
+    function replace_xpath_elements(nick_map, query) {
         // debug(`replacing ${query}`);
         let result = document.evaluate(query, document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
         debug("result", result);
@@ -98,30 +141,19 @@
         debug(result.snapshotItem(0));
     }
 
-    function serialise_map(map_obj) {
-        return Object.entries(map_obj).map(e => e[0] + "=" + e[1]).join("\n");
-    }
-
-    function parse_map(map_str) {
-        let map_obj = {};
-        for (const pair of map_str.split("\n")) {
-            let [k, v] = pair.split("=");
-            map_obj[k] = v;
-        }
-        return map_obj;
-    }
-
-    function dialog_html(dialog_id, textarea_id) {
+    function dialog_html() {
         return `
-            <div id="${dialog_id}" title="Discord custom nicknames">
+            <div id="${DIALOG_ID}" title="Discord custom nicknames">
               <p>
                   Enter your mappings here, one on each line.
               </p>
-              <textarea rows="5" cols="50" id="${textarea_id}"
+              <textarea rows="10" cols="50" id="${TEXTAREA_ID}"
                         placeholder="nickname=Real Name"></textarea>
               <p>
                   Each mapping should look something like
-                  <code>nickname=Firstname Lastname</code>
+              </p>
+              <pre><code>nickname=Firstname Lastname</code></pre>
+              <p>
                   where the left-hand side of the <code>=</code>
                   sign is the normal Discord nickname (excluding
                   the <code>#1234</code> suffix), and the
@@ -131,41 +163,85 @@
         `;
     }
 
-    function display_dialog() {
-        const dialog_id = ELEMENT_PREFIX + "-dialog";
-        const textarea_id = ELEMENT_PREFIX + "-textarea";
-        const selector = "#" + dialog_id;
-        if ($(selector).length == 0) {
-            GM_addStyle(GM_getResourceText("jQueryUI-css"));
-            $("body").append(dialog_html(dialog_id, textarea_id));
-            $("#" + textarea_id).innerText = nick_map_str;
-            $(selector).dialog({
-                autoOpen: false,
-                buttons: [{
+    function handle_dialog_save(dialog) {
+        let map_str = $(TEXTAREA_SELECTOR).val();
+        debug(`${TEXTAREA_SELECTOR} dialog save:`, map_str);
+        GM_setValue(STORAGE, map_str || "");
+        replace_all();
+        $(dialog).dialog("close");
+    }
+
+    function insert_dialog() {
+        GM_addStyle(GM_getResourceText("jQueryUI-css"));
+        $("body").append(dialog_html());
+        $(TEXTAREA_SELECTOR).val(get_nick_map_str());
+
+        $(DIALOG_SELECTOR).dialog({
+            minWidth: 300,
+            width: 700,
+            maxWidth: 300,
+            buttons: [
+                {
                     text: "Save",
-                    icon: "ui-icon-heart",
                     click: function() {
-                        let val = $("#" + textarea_id).innerText;
-                        log(val);
-                        GM_setValue(STORAGE, val || "");
-                        nick_map = parse_map(val || "");
-                        replace_all();
+                        handle_dialog_save(this);
+                    }
+                },
+                {
+                    text: "Cancel",
+                    click: function() {
+                        let orig = get_nick_map_str();
+                        log(`restoring ${TEXTAREA_SELECTOR} to`, orig);
+                        $(TEXTAREA_SELECTOR).val(orig);
                         $(this).dialog("close");
                     }
-                }]
-            });
+                }
+            ]
+        });
+    }
+
+    function display_dialog() {
+        if ($(DIALOG_SELECTOR).length == 0) {
+            insert_dialog();
         }
-        $(selector).dialog("open");
+        $(DIALOG_SELECTOR).dialog("open");
     }
 
     GM_registerMenuCommand("Nickname mapping", display_dialog);
 
+    const CSS_SELECTORS = [
+        "div[class^='membersWrap'] span[class^='roleColor']",
+        "span[class^='headerText'] span[class^='username']",
+        "div[class*='messageContent'] span.mention",
+        "div[class^='replyBar'] span[class^='name']",
+    ];
+
     function replace_all() {
-        waitForKeyElements(
-            "[class^='membersWrap'] span[class^='roleColor']",
-            () => replace_css_elements("[class^='membersWrap'] span[class^='roleColor']"),
-//            () => replace_xpath_elements("//span[starts-with(@class,'roleColor')]")
-        );
+        debug("replace_all()");
+        let nick_map = get_nick_map();
+        debug("parsed:", nick_map);
+
+        for (let selector of CSS_SELECTORS) {
+            replace_css_elements(nick_map, selector);
+        }
     }
-    replace_all();
+
+    function init() {
+        let waited = {};
+        let nick_map = get_nick_map();
+        for (let selector of CSS_SELECTORS) {
+            waitForKeyElements(
+                selector,
+                () => {
+                    debug("waitForKeyElements triggered for", selector);
+                    if (!waited[selector]) {
+                        replace_css_elements(nick_map, selector);
+                        waited[selector] = true;
+                    }
+                }
+            );
+        }
+    }
+
+    init();
 })();
