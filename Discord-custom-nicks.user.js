@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Discord custom nicknames
 // @namespace    https://github.com/aspiers/Discord-custom-nicks-userscript
-// @version      0.3.0
+// @version      0.3.1
 // @description  Assign custom names to Discord nicknames client-side
 // @author       Adam Spiers
 // @match        https://discord.com/channels/*
@@ -117,9 +117,15 @@
         if (mapped_name) {
             mapped_name = at + mapped_name;
             debug(`${at}${Discord_nick} -> ${mapped_name}`);
-            if (!orig_nick) {
+            if (!orig_nick && element.tagName !== "TITLE") {
                 // Back up the original to an attribute so that we can remap later
                 // without reloading the page.
+                //
+                // FIXME: Figure out a way to make this work
+                // flawlessly for <title>.  Currently it's slightly
+                // broken because <title> can change values when
+                // switching between DM pages, so we can't back up
+                // the original username to an attribute on it.
                 element.setAttribute(ORIG_ATTR, element.innerText)
             }
             element.innerText = mapped_name;
@@ -243,6 +249,8 @@
     GM_registerMenuCommand("Nickname mapping", display_dialog);
 
     const CSS_SELECTORS = [
+        "title",
+
         /////////////////////////////////////////////////////////
         // Channel pages
 
