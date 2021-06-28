@@ -133,6 +133,16 @@
         }
     }
 
+    function replace_all() {
+        debug("replace_all()");
+        let nick_map = get_nick_map();
+        debug("parsed:", nick_map);
+
+        for (let selector of CSS_SELECTORS) {
+            replace_css_elements(nick_map, selector);
+        }
+    }
+
     function dialog_html() {
         return `
             <div id="${DIALOG_ID}" title="Discord custom nicknames">
@@ -207,16 +217,6 @@
         "div[class*='messageContent'] span.mention",
         "div[class^='replyBar'] span[class^='name']",
     ];
-
-    function replace_all() {
-        debug("replace_all()");
-        let nick_map = get_nick_map();
-        debug("parsed:", nick_map);
-
-        for (let selector of CSS_SELECTORS) {
-            replace_css_elements(nick_map, selector);
-        }
-    }
 
     function init() {
         let waited = {};
