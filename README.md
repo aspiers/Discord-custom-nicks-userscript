@@ -47,7 +47,10 @@ First ensure you have [Tampermonkey](https://www.tampermonkey.net/)
 installed.  This script might also work with similar alternatives like
 [Violentmonkey](https://violentmonkey.github.io/) or
 [Greasemonkey](https://www.greasespot.net/), but I haven't tested
-those yet.
+those yet.  (If you can help with that, please see issues
+[#4](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/4)
+and
+[#5](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/5).)
 
 Then just [click
 here](https://raw.githubusercontent.com/aspiers/Discord-custom-nicks-userscript/main/Discord-custom-nicks.user.js)
