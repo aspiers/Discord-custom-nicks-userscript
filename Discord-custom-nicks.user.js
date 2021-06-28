@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Discord custom nicknames
 // @namespace    https://github.com/aspiers/Discord-custom-nicks-userscript
-// @version      0.3.1
+// @version      0.3.2
 // @description  Assign custom names to Discord nicknames client-side
 // @author       Adam Spiers
+// @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match        https://discord.com/channels/*
 // @icon         https://www.google.com/s2/favicons?domain=discord.com
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
