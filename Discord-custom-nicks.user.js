@@ -10,11 +10,16 @@
 // @require      https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @require      https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=115012
 // @resource     jQueryUI-css https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/vader/jquery-ui.min.css
+// @resource     jQueryUI-icon1 https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/vader/images/ui-icons_666666_256x240.png
+// @resource     jQueryUI-icon2 https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/vader/images/ui-icons_bbbbbb_256x240.png
+// @resource     jqueryUI-icon3 https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/vader/images/ui-icons_c98000_256x240.png
 // @downloadURL  https://raw.githubusercontent.com/aspiers/Discord-custom-nicks-userscript/main/Discord-custom-nicks.user.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_registerMenuCommand
 // @grant        GM_getResourceText
+// @grant        GM_getResourceURL
+// @grant        GM_info
 // @grant        GM_addStyle
 // @run-at       document-end
 // ==/UserScript==
@@ -176,8 +181,35 @@
         $(dialog).dialog("close");
     }
 
+    unsafeWindow.GM_info = GM_info;
+    function get_resource(name) {
+        return GM_info.script.resources.find(
+            r => r.name == name
+        );
+    }
+
+    function insert_CSS() {
+        let CSS = GM_getResourceText("jQueryUI-css");
+        let CSS_URL = get_resource("jQueryUI-css").url;
+        let CSS_URL_path = CSS_URL.replace(/[^/]+$/, '');
+        // debug(`CSS URL path is ${CSS_URL_path}`);
+        for (let resource of GM_info.script.resources) {
+            let image = resource.url.match(/images\/.+\.png/);
+            if (!image) {
+                continue;
+            }
+            let URL = GM_getResourceURL(resource.name);
+            let rel_path = image[0];
+            // debug(`Replacing url("${rel_path}") with url("${URL}")`);
+            CSS = CSS.replaceAll(
+                `url("${rel_path}")`,
+                `url("${URL}")`,
+            );
+        }
+        GM_addStyle(CSS);
+    }
+
     function insert_dialog() {
-        GM_addStyle(GM_getResourceText("jQueryUI-css"));
         $("body").append(dialog_html());
         $(TEXTAREA_SELECTOR).val(get_nick_map_str());
 
@@ -207,6 +239,7 @@
 
     function display_dialog() {
         if ($(DIALOG_SELECTOR).length == 0) {
+            insert_CSS();
             insert_dialog();
         }
         $(DIALOG_SELECTOR).dialog("open");
