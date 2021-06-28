@@ -133,14 +133,6 @@
         }
     }
 
-    function replace_xpath_elements(nick_map, query) {
-        // debug(`replacing ${query}`);
-        let result = document.evaluate(query, document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-        debug("result", result);
-        debug(result.snapshotLength);
-        debug(result.snapshotItem(0));
-    }
-
     function dialog_html() {
         return `
             <div id="${DIALOG_ID}" title="Discord custom nicknames">
