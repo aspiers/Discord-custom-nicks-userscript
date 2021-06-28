@@ -111,7 +111,7 @@
         let mapped_name = nick_map[Discord_nick];
         if (mapped_name) {
             mapped_name = at + mapped_name;
-            log(`${at}${Discord_nick} -> ${mapped_name}`);
+            debug(`${at}${Discord_nick} -> ${mapped_name}`);
             if (!orig_nick) {
                 // Back up the original to an attribute so that we can remap later
                 // without reloading the page.
@@ -196,7 +196,7 @@
                     text: "Cancel",
                     click: function() {
                         let orig = get_nick_map_str();
-                        log(`restoring ${TEXTAREA_SELECTOR} to`, orig);
+                        debug(`restoring ${TEXTAREA_SELECTOR} to`, orig);
                         $(TEXTAREA_SELECTOR).val(orig);
                         $(this).dialog("close");
                     }
