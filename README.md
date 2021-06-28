@@ -6,8 +6,9 @@ What's this for?
 
 If you find yourself struggling to remember who someone is on Discord
 from their username, and you use Discord in a standard desktop browser
-supported by [Tampermonkey](https://www.tampermonkey.net/), then this
-is for you.
+supported by [Tampermonkey](https://www.tampermonkey.net/) or
+[Violentmonkey](https://violentmonkey.github.io/), then this is for
+you.
 
 (Unfortunately this won't probably work on Discord apps or mobile
 browsers.)
@@ -58,14 +59,12 @@ chosen.
 Installation
 ------------
 
-First ensure you have [Tampermonkey](https://www.tampermonkey.net/)
-installed.  This script might also work with similar alternatives like
-[Violentmonkey](https://violentmonkey.github.io/) or
-[Greasemonkey](https://www.greasespot.net/), but I haven't tested
-those yet.  (If you can help with that, please see issues
-[#4](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/4)
-and
-[#5](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/5).)
+First ensure you have [Tampermonkey](https://www.tampermonkey.net/) or
+[Violentmonkey](https://violentmonkey.github.io/) installed.  This
+script might also work with
+[Greasemonkey](https://www.greasespot.net/), but I haven't tested that
+yet.  (If you can help with that, please see [issue
+#5](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/5).)
 
 Then just [click
 here](https://raw.githubusercontent.com/aspiers/Discord-custom-nicks-userscript/main/Discord-custom-nicks.user.js)
@@ -76,7 +75,7 @@ Configuration
 
 - Visit https://discord.com
 
-- Click on the Tampermonkey icon near the top-right of your browser.
+- Click on the Tampermonkey or Violentmonkey icon near the top-right of your browser.
 
 - If installation succeeded, you should see a `Discord custom
   nicknames` userscript active.
