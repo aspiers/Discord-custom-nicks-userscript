@@ -96,12 +96,14 @@ with the more sensible text you have chosen.
 FAQ
 ---
 
-### It doesn't always immediately do the replacement if I switch channels / pages
+### It's not working perfectly / at all
 
-Yeah, sorry about that - I've filed [an issue to track this
-bug](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/7),
-but this is a brand new project and I haven't got round to properly
-fixing it yet.
+Sorry about that - this is a brand new project so there are inevitably
+bugs.  Please first double-check you followed the above instructions,
+then check [the list of known
+issues](https://github.com/aspiers/Discord-custom-nicks-userscript/issues/)
+to see if it's already a known issue.  If not feel free to file a new
+one.
 
 ### Does this compromise the privacy of users?
 
