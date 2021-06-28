@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Discord custom nicknames
 // @namespace    https://github.com/aspiers/Discord-custom-nicks-userscript
-// @version      0.3.3
+// @version      0.3.4
 // @description  Assign custom nicknames to Discord usernames client-side
 // @author       Adam Spiers
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
@@ -280,7 +280,10 @@
         "div[class^=chat] section[class^=title] h3[class*=title]",
 
         // h3 under individual DM large avatar
-        "div[id^=chat-messages] h3[class^=header]"
+        "div[id^=chat-messages] h3[class^=header]",
+
+        // "Person is typing..." notification at bottom
+        "main[class^=chatContent] div[class^=typing] span[class^=text] strong",
 
         // N.B. deliberately not replacing
         //
