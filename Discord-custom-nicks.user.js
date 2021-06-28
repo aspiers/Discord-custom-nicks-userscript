@@ -181,6 +181,12 @@
         $(dialog).dialog("close");
     }
 
+    function handle_dialog_open(dialog) {
+        let orig = get_nick_map_str();
+        debug(`restoring ${TEXTAREA_SELECTOR} to`, orig);
+        $(TEXTAREA_SELECTOR).val(orig);
+    }
+
     unsafeWindow.GM_info = GM_info;
 
     function insert_CSS() {
@@ -218,13 +224,11 @@
                 {
                     text: "Cancel",
                     click: function() {
-                        let orig = get_nick_map_str();
-                        debug(`restoring ${TEXTAREA_SELECTOR} to`, orig);
-                        $(TEXTAREA_SELECTOR).val(orig);
                         $(this).dialog("close");
                     }
                 }
-            ]
+            ],
+            open: handle_dialog_open,
         });
     }
 
