@@ -45,6 +45,9 @@
     let $ = jQuery;
     unsafeWindow.jQuery = jQuery;
 
+    // Don't replace more often than this number of milliseconds.
+    const DEBOUNCE_MS = 2000;
+
     const ELEMENT_PREFIX = "Discord-custom-nicknames-";
     const DIALOG_ID = ELEMENT_PREFIX + "dialog";
     const TEXTAREA_ID = ELEMENT_PREFIX + "textarea";
@@ -219,16 +222,17 @@
     ];
 
     function init() {
-        let waited = {};
+        let lastWaited = {};
         let nick_map = get_nick_map();
         for (let selector of CSS_SELECTORS) {
             waitForKeyElements(
                 selector,
                 () => {
                     debug("waitForKeyElements triggered for", selector);
-                    if (!waited[selector]) {
+                    let last = lastWaited[selector];
+                    if (!last || (new Date() - last > DEBOUNCE_MS)) {
                         replace_css_elements(nick_map, selector);
-                        waited[selector] = true;
+                        lastWaited[selector] = new Date();
                     }
                 }
             );
