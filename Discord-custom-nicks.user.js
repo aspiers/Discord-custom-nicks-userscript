@@ -237,6 +237,7 @@
                 }
             );
         }
+        setInterval(replace_all, 5000);
     }
 
     init();
