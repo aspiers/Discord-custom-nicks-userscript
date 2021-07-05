@@ -264,8 +264,11 @@
         // Mentions within messages
         "div[class*=messageContent] span.mention",
 
-        // When replying, name of user we're replying to
+        // When composing a reply, name of user we're replying to
         "div[class^=replyBar] span[class^=name]",
+
+        // Attributions of messages replied to
+        "div[class^=repliedMessage] span[class^=username]",
 
         /////////////////////////////////////////////////////////
         // DM pages
